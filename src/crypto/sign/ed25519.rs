@@ -164,7 +164,7 @@ pub fn sign_detached(m: &[u8], sk: &SecretKey) -> Signature {
         );
     }
     assert_eq!(siglen, SIGNATUREBYTES as c_ulonglong);
-    Signature::from_bytes(sig)
+    Signature::from_bytes(&sig)
 }
 
 /// `verify_detached()` verifies the signature in `sig` against the message `m`
@@ -173,7 +173,7 @@ pub fn sign_detached(m: &[u8], sk: &SecretKey) -> Signature {
 pub fn verify_detached(sig: &Signature, m: &[u8], pk: &PublicKey) -> bool {
     let ret = unsafe {
         ffi::crypto_sign_ed25519_verify_detached(
-            sig.as_ref().as_ptr(),
+            &sig.as_ptr(),
             m.as_ptr(),
             m.len() as c_ulonglong,
             pk.0.as_ptr(),
@@ -220,7 +220,7 @@ impl State {
             );
         }
         assert_eq!(siglen, SIGNATUREBYTES as c_ulonglong);
-        Signature::from_bytes(sig)
+        Signature::from_bytes(&sig)
     }
 
     /// `verify` verifies the signature in `sm` using the signer's public key `pk`.
@@ -336,7 +336,7 @@ mod test {
             let mut sig = sign_detached(&m, &sk).to_bytes();
             for j in 0..SIGNATUREBYTES {
                 sig[j] ^= 0x20;
-                assert!(!verify_detached(&Signature::from_bytes(sig), &m, &pk));
+                assert!(!verify_detached(&Signature::from_bytes(&sig), &m, &pk));
                 sig[j] ^= 0x20;
             }
         }
