@@ -6,7 +6,7 @@ keywords = ["crypto", "NaCl", "libsodium"]
 license = "MIT OR Apache-2.0"
 name = "sodiumoxide"
 readme = "README.md"
-repository = "https://github.com/sodiumoxide/sodiumoxide"
+repository = "https://github.com/iziiLeo/sodiumoxide"
 categories = ["cryptography"]
 version = "0.2.7"
 exclude = [
@@ -18,7 +18,7 @@ exclude = [
 members = ["libsodium-sys", "testcrate"]
 
 [dependencies]
-ed25519 = { version = "1", default-features = false }
+ed25519 = { version = "2", default-features = false }
 libc = { version = "^0.2.41" , default-features = false }
 libsodium-sys = { version = "0.2.7", path = "libsodium-sys" }
 serde = { version = "^1.0.59", default-features = false, optional = true }
